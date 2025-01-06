@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wavy Gradient Background</title>
+    <style>
+        /* General styles */
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+            background-color: #101010;
+        }
+
+        .wavy-gradient {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .wavy-gradient h1 {
+            position: relative;
+            z-index: 2;
+            font-size: 3rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* Wave Layers */
+        .wavy-gradient::before,
+        .wavy-gradient::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 150%;
+            height: 150%;
+            background: linear-gradient(45deg, #ff7eb3, #ff758c, #ff7eb3, #84fab0, #8fd3f4, #4facfe);
+            background-size: 200% 200%;
+            animation: gradientShift 8s ease infinite;
+            z-index: 1;
+        }
+
+        .wavy-gradient::before {
+            clip-path: polygon(0 0, 100% 0, 100% 50%, 0 100%);
+            opacity: 0.8;
+            animation: waveMove 6s ease-in-out infinite;
+        }
+
+        .wavy-gradient::after {
+            clip-path: polygon(0 50%, 100% 50%, 100% 100%, 0 100%);
+            opacity: 0.6;
+            animation: waveMove 6s ease-in-out infinite reverse;
+        }
+
+        /* Animations */
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes waveMove {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(10px); }
+        }
+    </style>
+</head>
+<body>
+    <div class="wavy-gradient">
+        <h1>Wave Background</h1>
+    </div>
+</body>
+</html>
