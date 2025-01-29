@@ -11,31 +11,18 @@ function closeSidebar() {
     topbar.style.display = 'flex';
 }
 
-document.addEventListener("scroll", () => {
-    const sections = document.querySelectorAll("section");
-    const navbar = document.querySelector("nav");
-    const navLinks = document.querySelectorAll(".topbar a");
-    let currentSection = null;
+document.getElementById('current-year').textContent = new Date().getFullYear();
 
-    sections.forEach((section) => {
-        const rect = section.getBoundingClientRect();
-        // Check if the section is visible in the viewport
-        if (rect.top <= window.innerHeight / 2 && rect.bottom >= window.innerHeight / 2) {
-            currentSection = section;
-        }
-    });
+(function() {
+    emailjs.init("PD3ut7vHtaiRXs4cT");
+})();
 
-    if (currentSection) {
-        console.log(`Current section: ${currentSection.id}`); // Debugging log
-
-        let bgColor;
-        if (currentSection.id === "title") {
-            bgColor = "linear-gradient(90deg, #ff6c47, #ffdaa2, #ff562c)";
-        } else {
-            bgColor = window.getComputedStyle(currentSection).backgroundImage;
-        }
-        navbar.style.transition = "background-image 1s ease-in-out";
-        navbar.style.backgroundImage = bgColor;
-
-    }
+document.getElementById('contact-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+    emailjs.sendForm('service_t34upxv', 'template_mv3woef', this)
+        .then(function() {
+            alert('Message sent successfully!');
+        }, function(error) {
+            alert('Failed to send message. Please try again later.');
+        });
 });

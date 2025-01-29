@@ -1,3 +1,12 @@
+:root {
+    --dark: #7c664e;
+    --light: #fff6b6;
+    --pastel_orange: #f8da92;
+    --pastel_brown: #e0c699;
+    --nav_pad: 75px;
+    --darkness: 0.05;
+}
+
 /* <----------------------------------------- General -----------------------------------------> */
 
 html {
@@ -9,17 +18,36 @@ body {
 }
 
 section {
+    position: relative;
     min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: space-evenly;
     text-align: center;
     flex-direction: row;
-    padding: 60px 20px 0px 20px;
-    overflow: auto; /* Allow scrolling within sections */
-    scroll-snap-align: start; /* Optional: Snap section alignment */
-    scroll-snap-stop: always; /* Optional: Stop scrolling at section */
+    padding: var(--nav_pad) 20px 0px 20px;
     flex-wrap: wrap;
+
+}
+
+section::before, section::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 50px;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1));
+    z-index: 1;
+    pointer-events: none;
+}
+
+section::before {
+    top: 0;
+    background: linear-gradient(to top, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1));
+}
+
+section::after {
+    bottom: 0;
 }
 
 h1, h2 {
@@ -39,11 +67,11 @@ nav {
     position: fixed; /* Fix navbar at the top */
     top: 0;
     width: 100%;
-    box-shadow: 0px 2px 10px white;
     z-index: 1000; /* Ensure it's on top of other elements */
-    border-radius: 15px;
-    background: linear-gradient(90deg, #ff6c47, #ffdaa2, #ff562c);
-    border: 2px solid #ebebebd6;
+    /* border-radius: 15px; */
+    background: var(--pastel_brown);
+    /* background: linear-gradient(90deg, var(--dark), var(--pastel_brown)); */
+    border: 2px solid white;
 }
 
 nav ul {
@@ -53,10 +81,11 @@ nav ul {
     align-items: center;
     list-style-type: none; /* Remove dots from ul */
     margin-bottom: 0;
+    padding: 0 20px;
 }
 
 nav li {
-    height:60px;
+    height:70px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -150,56 +179,79 @@ nav li.stayOnMobile {
     display: none;
 }
 
-/* <----------------------------------------- About Me -----------------------------------------> */
+/* <----------------------------------------- Title page -----------------------------------------> */
 
 .parallax {
     position: relative;
     overflow: hidden;
 }
 
-.parallax::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-image: url("assets/title/skate-day-2.jpg");
+
+.title div>h1 {
+    font-size: 5rem;
+    font-weight: 600;
+    padding: 0 40px;
+    color: black;
+    animation: pulse 3s infinite;
+}
+
+
+.title {
+    /* Height and width: */
+    height: 100vh;
+    width: 100%;
+    /* Display properties: */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    /* Adding bg image: */
+    background-image: url('assets/background/title.jpg');
+    background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    background-size: cover;
-    background-attachment: fixed; /* Parallax effect */
-    filter: blur(5px); /* Adjust the blur radius as needed */
-    z-index: -1;
 }
 
+/* .title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 50px;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1));
+    z-index: 0;
+} */
 
-.parallax > h1 {
-    font-size: 7rem;
-    font-weight: 600;
-    background: linear-gradient(90deg, #ff6c47, #ffdaa2, #ff562c);
-    background-size: 200%; /* Makes the gradient twice as wide for smooth animation */
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    animation: gradient-move 5s ease-in-out infinite;
-    transition: transform 0.5s ease-in-out, background-position 0.5s ease-in-out;
+
+.title div {
+    width: 50%;
+    padding: auto;
 }
 
-.parallax > h1:hover {
-    animation: pulse 2s infinite;
+.title .text {
+    /* Ensure text is above the image */
+    z-index: 1;
+    text-align: center;
 }
 
-@keyframes gradient-move {
-    0% {
-        background-position: 0%;
-    }
-    50% {
-        background-position: 100%;
-    }
-    100% {
-        background-position: 0%;
-    }
+.title .photo {
+    /* Ensure image is below the text */
+    z-index: 0;
+    /* background: rgba(255, 255, 255, 0.893); */
 }
+
+.title .photo > img {
+    height: 100%;
+    width: auto;
+    /* Adjust the max-width as needed */
+    background-color: transparent;
+}
+
+.title .photo {
+    height: 80%;
+}
+
 
 @keyframes pulse {
     0% {
@@ -219,40 +271,70 @@ nav li.stayOnMobile {
     }
 }
 
-.parallax > p {
-    text-shadow: 0px 0px 10px rgba(0, 0, 0, 1);
-    font-size: 1.5rem;
-    font-weight: 500;
-    margin: 20px auto;
-}
-
-/* <----------------------------------------- About -----------------------------------------> */
+/* <----------------------------------------- About Me -----------------------------------------> */
 
 #about {
-    background: linear-gradient(to bottom, #FF8A8A, #F0EAAC);
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    background-image: url('assets/background/title.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: 1;
 }
 
 .long-info {
-    width: 100%;
-    height: 100%;
-    display:flex;
+    width: 60%;
+    height: 75%;
+    display: flex;
     flex-direction: column;
-    margin: 0;
-    padding: 0;
+    justify-content: space-evenly;
+    background: rgba(255, 255, 255, 1);
+    border-radius: 50px;
+    padding: 30px;
+    margin: 20px 0;
+    z-index: 1;
+}
+
+
+.long-info strong {
+    font-size: 1.25rem; 
 }
 
 .highlight-about {
-    color: #85ad1f;
+    color: var(--pastel_orange);
 }
+
+.green-icon {
+    color: var(--pastel_orange);
+}
+
+.icon {
+    width: 24px;
+    height: 24px;
+    margin-left: 10px;
+    vertical-align: middle;
+}
+
 /* <----------------------------------------- Library -----------------------------------------> */
+
 #library {
-    background: linear-gradient(to bottom, #F0EAAC, #F0C1E1);
+    background-image: url('assets/background/projects.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 .container {
+    padding: 50px 0 0 0;
     display: flex;
     justify-content: space-evenly;
     flex-wrap: wrap;
+}
+
+.container > h2 {
+    width: 100%;
 }
 
 .card {
@@ -263,6 +345,19 @@ nav li.stayOnMobile {
     /* box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); */
     border: 8px solid #ebebebd6;
     margin: 40px 20px;
+
+}
+
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.454);
+    z-index: 1;
+    pointer-events: none;
 }
 
 .card-img {
@@ -270,27 +365,8 @@ nav li.stayOnMobile {
     height: 100%;
     object-fit: cover;
     border-radius: 15px;
+    z-index: 0;
 }
-
-/* div.cfa {
-    background: rgba(255, 255, 255, 0.486);
-    height: 50px;
-    display: flex;
-    margin: auto 0 0 0;
-    width: 100%;
-    flex-wrap: wrap;
-}
-
-div.cfa a {
-    height: 80%;
-    color: black;
-    background: white;
-    padding: 5px 15px;
-    margin: 5px;
-    text-align: center;
-    border-radius: 10px;
-
-} */
 
 .card-body {
     padding: 0;
@@ -303,6 +379,7 @@ div.cfa a {
     backdrop-filter: blur(1px);
     border-radius: 15px;
     color: white;
+    z-index: 10;
 }
 
 .card-title {
@@ -342,8 +419,7 @@ div.cfa a {
 }
 
 .card:hover {
-    box-shadow: 0px 15px 15px white;
-    transform: scale(1.1);
+    transform: scale(1.15);
     transition: box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out;
 }
 
@@ -387,13 +463,14 @@ div.cfa a {
 }
 
 
-
 /* <----------------------------------------- Tools -----------------------------------------> */
 #tools {
-    background: linear-gradient(to bottom, #F0C1E1, #C6E7FF);
-    padding: 60px 0 0 0;
+    background-image: url('assets/background/about.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: space-evenly;
 }
 
 .bottom {
@@ -416,12 +493,12 @@ div.cfa a {
 
 
 .logos-slide-cs, .logos-slide-math {
-    padding: 25px 0;
+    padding: 35px 0;
     display: inline-block;
 }
 
 .logos-slide-cs {
-    animation: 20s slide infinite linear;
+    animation: 17s slide infinite linear;
 }
 
 .logos-slide-math {
@@ -430,8 +507,8 @@ div.cfa a {
 
 
 .logos-slide-cs > img, .logos-slide-math > img {
-    height: 55px;
-    margin: 0 40px;
+    height: 100px;
+    margin: 0 65px;
     transition: transform 0.3s;
 }
 
@@ -452,7 +529,24 @@ div.cfa a {
 /* <----------------------------------------- Contact -----------------------------------------> */
 
 #contact {
-    background: linear-gradient(to bottom, #C6E7FF, #E0E5B6);
+    flex-direction: column;
+    background-image: url('assets/background/title.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+
+#contact .main {
+    width: 60%;
+    height: 75%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    background: rgba(255, 255, 255, 0.893);
+    border-radius: 50px;
+    padding: 40px;
+    z-index: 1;
 }
 
 #contact > h2 {
@@ -483,29 +577,30 @@ label {
 }
 
 input, textarea {
-    border: 1px solid #b4b3b3d6;
+    border: 1px solid rgb(209, 209, 209);
     border-radius: 5px;
-    background: #c3c2c2d6;
+    background: white;
     opacity: 1;
-    padding-left: 10px;
+    padding: 5px 0 5px 10px;
     outline: none;
     color: black;
     font-size: 1em;
     box-sizing: border-box;
     font-weight: 400;
+    height: auto;
 }
 
 input:focus, textarea:focus {
-    background-color: transparent;
-    box-shadow: 0px 0px 8px white;
-    border: solid white;
+    /* box-shadow: 0px 0px 8px white; */
 }
 
 .submit {
     padding: 5px;
-    width: 55%;
+    width: 30%;
+    height: auto;
     margin: 50px auto 50px auto;
-    background-color: #b4b3b3d6;
+    padding: 5px 0;
+    background-color: rgba(255, 255, 255, 0.8);
     color: black;
     transition: border;
     transition-duration: 0.3s;
@@ -513,37 +608,96 @@ input:focus, textarea:focus {
 }
 
 .submit:hover {
-    box-shadow: 0px 0px 10px white;
-    border: solid white;
+    transition: background-color 0.5s ease;
+    background-color: var(--light);
 }
 
-.submit:active {
+/* .submit:active {
     border: 1px solid white; 
     background-color: white;
-}
+} */
 
 textarea {
     resize: none;
 }
 
 /* <----------------------------------------- Footer -----------------------------------------> */
+footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* Center items horizontally */
+    justify-content: center;
+    /* Center items vertically */
+    background: var(--dark);
+    color: white;
+    padding: 40px 0;
+    bottom: 0;
+    width: 100%;
+}
+
+footer p {
+    margin: 0;
+    font-size: 1rem;
+    text-align: center;
+    /* Ensure text within the paragraph is centered */
+}
+
+
 
 /* <----------------------------------------- Media Queries  ------------------------------------------> */
 
+@media(max-width:1100px) {
+    .long-info p {
+        font-size: 1rem;
+    }
+    .long-info strong {
+        font-size: 1rem;
+    }
+    .long-info {
+        width: 85%;
+    }
+    #contact .main {
+        width: 85%;
+    }
+    h1,
+    h2 {
+        font-size: 3.5rem;
+    }
+
+}
+
 @media(max-width:700px) {
+    h1, h2 {
+        font-size: 3rem;
+    }
+    
+    p {
+        font-size: 0.8rem;
+    }
     .hideOnMobile {
         display:none;
     }
     .menuButton {
         display: block;
     }
-
-    h1, h2 {
-        font-size: 4rem;
+    .title .text h1 {
+        font-size: 3rem;
+        width: 100%;
+        /* Make h1 take up the full width */
+        text-align: center;
+        /* Center the text */
+        /* Adjust font size as needed */
+        padding: 0 20px;
+        /* Add padding if needed */
     }
 
-    p {
-        font-size: 1rem;
+    .title {
+        padding: 20px;
+        /* Add padding to the title section if needed */
+    }
+    .photo  {
+        display: none;
     }
 
     .card {
